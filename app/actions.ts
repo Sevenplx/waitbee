@@ -7,23 +7,41 @@ import { redirect } from 'next/navigation';
 export async function signupAction(formData: FormData) {
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
+  
+  let success = false;
   try {
     const user = await createUser(email, password);
     await setSession(user.id);
-  } catch (e) {
-    redirect('/signup?error=exists');
+    success = true;
+  } catch (e: any) {
+    console.error('Signup error:', e);
+    if (e.message === 'User already exists') {
+      redirect('/signup?error=exists');
+    }
+    // For other errors (like DB connection), let them bubble up or handle specifically
+    throw e;
   }
-  redirect('/dashboard');
+  
+  if (success) {
+    redirect('/dashboard');
+  }
 }
 
 export async function loginAction(formData: FormData) {
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
-  const user = await verifyUser(email, password);
-  if (!user) {
-    redirect('/login?error=invalid');
+  
+  try {
+    const user = await verifyUser(email, password);
+    if (!user) {
+      redirect('/login?error=invalid');
+    }
+    await setSession(user.id);
+  } catch (e: any) {
+    if (e.digest?.includes('NEXT_REDIRECT')) throw e;
+    console.error('Login error:', e);
+    throw e;
   }
-  await setSession(user.id);
   redirect('/dashboard');
 }
 

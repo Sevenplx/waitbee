@@ -1,4 +1,4 @@
-import { sql } from '@vercel/postgres';
+import prisma from './prisma';
 import crypto from 'crypto';
 
 export interface User {
@@ -40,36 +40,38 @@ export interface Subscriber {
   createdAt: string;
 }
 
-// Helper to ensure tables exist
+// Helper to ensure tables exist using raw SQL through Prisma
+// This is a fallback for when migrations haven't been run
 async function ensureTables() {
   try {
-    await sql`
+    // Check if users table exists
+    await prisma.$executeRaw`
       CREATE TABLE IF NOT EXISTS users (
-        id UUID PRIMARY KEY,
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         email TEXT UNIQUE NOT NULL,
         password_hash TEXT NOT NULL,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       );
     `;
-    await sql`
+    await prisma.$executeRaw`
       CREATE TABLE IF NOT EXISTS sessions (
-        id UUID PRIMARY KEY,
-        user_id UUID REFERENCES users(id),
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        user_id UUID REFERENCES users(id) ON DELETE CASCADE,
         expires_at TIMESTAMP WITH TIME ZONE NOT NULL
       );
     `;
-    await sql`
+    await prisma.$executeRaw`
       CREATE TABLE IF NOT EXISTS reset_tokens (
-        id UUID PRIMARY KEY,
-        user_id UUID REFERENCES users(id),
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        user_id UUID REFERENCES users(id) ON DELETE CASCADE,
         token TEXT UNIQUE NOT NULL,
         expires_at TIMESTAMP WITH TIME ZONE NOT NULL
       );
     `;
-    await sql`
+    await prisma.$executeRaw`
       CREATE TABLE IF NOT EXISTS waitlists (
-        id UUID PRIMARY KEY,
-        user_id UUID REFERENCES users(id),
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        user_id UUID REFERENCES users(id) ON DELETE CASCADE,
         product_name TEXT NOT NULL,
         description TEXT NOT NULL,
         slug TEXT UNIQUE NOT NULL,
@@ -79,17 +81,28 @@ async function ensureTables() {
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       );
     `;
-    await sql`
+    await prisma.$executeRaw`
       CREATE TABLE IF NOT EXISTS subscribers (
-        id UUID PRIMARY KEY,
-        waitlist_id UUID REFERENCES waitlists(id),
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        waitlist_id UUID REFERENCES waitlists(id) ON DELETE CASCADE,
         email TEXT NOT NULL,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
         UNIQUE(waitlist_id, email)
       );
     `;
+    console.log('Database tables verified/created');
   } catch (error) {
-    console.error('Error creating tables:', error);
+    console.error('Error ensuring tables exist:', error);
+    // Don't throw here, as Prisma might still work if tables exist but check failed
+  }
+}
+
+// Run ensureTables on module load (or we could run it before the first query)
+let tablesEnsured = false;
+async function initDb() {
+  if (!tablesEnsured) {
+    await ensureTables();
+    tablesEnsured = true;
   }
 }
 
@@ -100,19 +113,22 @@ function hashPassword(password: string): string {
 }
 
 export async function createUser(email: string, password: string): Promise<User> {
-  await ensureTables();
-  const id = crypto.randomUUID();
+  await initDb();
   const passwordHash = hashPassword(password);
   
   try {
-    const { rows } = await sql`
-      INSERT INTO users (id, email, password_hash)
-      VALUES (${id}, ${email}, ${passwordHash})
-      RETURNING id, email, password_hash as "passwordHash", created_at as "createdAt"
-    `;
-    return rows[0] as User;
+    const user = await prisma.user.create({
+      data: {
+        email,
+        passwordHash,
+      },
+    });
+    return {
+      ...user,
+      createdAt: user.createdAt.toISOString(),
+    };
   } catch (error: any) {
-    if (error.code === '23505') { // Unique violation
+    if (error.code === 'P2002') { // Prisma unique constraint violation
       throw new Error('User already exists');
     }
     throw error;
@@ -120,176 +136,208 @@ export async function createUser(email: string, password: string): Promise<User>
 }
 
 export async function verifyUser(email: string, password: string): Promise<User | null> {
-  await ensureTables();
-  const { rows } = await sql`
-    SELECT id, email, password_hash as "passwordHash", created_at as "createdAt"
-    FROM users
-    WHERE email = ${email}
-  `;
-  const user = rows[0] as User;
+  await initDb();
+  const user = await prisma.user.findUnique({
+    where: { email },
+  });
+  
   if (!user) return null;
   
   const [salt, key] = user.passwordHash.split(':');
   const derivedKey = crypto.scryptSync(password, salt, 64).toString('hex');
-  if (key === derivedKey) return user;
+  if (key === derivedKey) {
+    return {
+      ...user,
+      createdAt: user.createdAt.toISOString(),
+    };
+  }
   return null;
 }
 
 export async function getUserById(id: string): Promise<User | null> {
-  await ensureTables();
-  const { rows } = await sql`
-    SELECT id, email, password_hash as "passwordHash", created_at as "createdAt"
-    FROM users
-    WHERE id = ${id}
-  `;
-  return (rows[0] as User) || null;
+  await initDb();
+  const user = await prisma.user.findUnique({
+    where: { id },
+  });
+  if (!user) return null;
+  return {
+    ...user,
+    createdAt: user.createdAt.toISOString(),
+  };
 }
 
 export async function createSession(userId: string): Promise<Session> {
-  await ensureTables();
-  const id = crypto.randomUUID();
-  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
+  await initDb();
+  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
   
-  const { rows } = await sql`
-    INSERT INTO sessions (id, user_id, expires_at)
-    VALUES (${id}, ${userId}, ${expiresAt})
-    RETURNING id, user_id as "userId", expires_at as "expiresAt"
-  `;
-  return rows[0] as Session;
+  const session = await prisma.session.create({
+    data: {
+      userId,
+      expiresAt,
+    },
+  });
+  return {
+    ...session,
+    expiresAt: session.expiresAt.toISOString(),
+  };
 }
 
 export async function getSession(id: string): Promise<Session | null> {
-  await ensureTables();
-  const { rows } = await sql`
-    SELECT id, user_id as "userId", expires_at as "expiresAt"
-    FROM sessions
-    WHERE id = ${id}
-  `;
-  return (rows[0] as Session) || null;
+  await initDb();
+  const session = await prisma.session.findUnique({
+    where: { id },
+  });
+  if (!session) return null;
+  return {
+    ...session,
+    expiresAt: session.expiresAt.toISOString(),
+  };
 }
 
 export async function createResetToken(email: string): Promise<string | null> {
-  await ensureTables();
-  const { rows: userRows } = await sql`SELECT id FROM users WHERE email = ${email}`;
-  const user = userRows[0];
+  await initDb();
+  const user = await prisma.user.findUnique({
+    where: { email },
+  });
   if (!user) return null;
 
-  const id = crypto.randomUUID();
   const token = crypto.randomBytes(32).toString('hex');
-  const expiresAt = new Date(Date.now() + 1000 * 60 * 60).toISOString();
+  const expiresAt = new Date(Date.now() + 1000 * 60 * 60);
   
-  await sql`
-    INSERT INTO reset_tokens (id, user_id, token, expires_at)
-    VALUES (${id}, ${user.id}, ${token}, ${expiresAt})
-  `;
+  await prisma.resetToken.create({
+    data: {
+      userId: user.id,
+      token,
+      expiresAt,
+    },
+  });
   return token;
 }
 
 export async function resetPassword(token: string, newPassword: string): Promise<boolean> {
-  await ensureTables();
-  const { rows: tokenRows } = await sql`
-    SELECT user_id as "userId", expires_at as "expiresAt"
-    FROM reset_tokens
-    WHERE token = ${token}
-  `;
-  const resetToken = tokenRows[0];
-  if (!resetToken) return false;
+  await initDb();
+  const resetToken = await prisma.resetToken.findUnique({
+    where: { token },
+  });
   
-  if (new Date(resetToken.expiresAt) < new Date()) return false;
+  if (!resetToken) return false;
+  if (resetToken.expiresAt < new Date()) return false;
   
   const passwordHash = hashPassword(newPassword);
   
-  await sql`
-    UPDATE users
-    SET password_hash = ${passwordHash}
-    WHERE id = ${resetToken.userId}
-  `;
+  await prisma.user.update({
+    where: { id: resetToken.userId },
+    data: { passwordHash },
+  });
   
-  await sql`DELETE FROM reset_tokens WHERE token = ${token}`;
+  await prisma.resetToken.delete({
+    where: { token },
+  });
   return true;
 }
 
 export async function createWaitlist(userId: string, data: Omit<Waitlist, 'id' | 'userId' | 'slug' | 'maxSubscribers' | 'createdAt'>) {
-  await ensureTables();
-  const id = crypto.randomUUID();
+  await initDb();
   const slug = data.productName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') + '-' + crypto.randomBytes(2).toString('hex');
   
-  const { rows } = await sql`
-    INSERT INTO waitlists (id, user_id, product_name, description, slug, button_text, bg_color)
-    VALUES (${id}, ${userId}, ${data.productName}, ${data.description}, ${slug}, ${data.buttonText}, ${data.bgColor})
-    RETURNING id, user_id as "userId", product_name as "productName", description, slug, button_text as "buttonText", bg_color as "bgColor", max_subscribers as "maxSubscribers", created_at as "createdAt"
-  `;
-  return rows[0] as Waitlist;
+  const waitlist = await prisma.waitlist.create({
+    data: {
+      userId,
+      productName: data.productName,
+      description: data.description,
+      slug,
+      buttonText: data.buttonText,
+      bgColor: data.bgColor,
+    },
+  });
+  
+  return {
+    ...waitlist,
+    createdAt: waitlist.createdAt.toISOString(),
+  };
 }
 
 export async function getUserWaitlists(userId: string) {
-  await ensureTables();
-  const { rows } = await sql`
-    SELECT id, user_id as "userId", product_name as "productName", description, slug, button_text as "buttonText", bg_color as "bgColor", max_subscribers as "maxSubscribers", created_at as "createdAt"
-    FROM waitlists
-    WHERE user_id = ${userId}
-    ORDER BY created_at DESC
-  `;
-  return rows as Waitlist[];
+  await initDb();
+  const waitlists = await prisma.waitlist.findMany({
+    where: { userId },
+    orderBy: { createdAt: 'desc' },
+  });
+  
+  return waitlists.map(w => ({
+    ...w,
+    createdAt: w.createdAt.toISOString(),
+  }));
 }
 
 export async function getWaitlistById(id: string) {
-  await ensureTables();
-  const { rows } = await sql`
-    SELECT id, user_id as "userId", product_name as "productName", description, slug, button_text as "buttonText", bg_color as "bgColor", max_subscribers as "maxSubscribers", created_at as "createdAt"
-    FROM waitlists
-    WHERE id = ${id}
-  `;
-  return (rows[0] as Waitlist) || null;
+  await initDb();
+  const waitlist = await prisma.waitlist.findUnique({
+    where: { id },
+  });
+  if (!waitlist) return null;
+  return {
+    ...waitlist,
+    createdAt: waitlist.createdAt.toISOString(),
+  };
 }
 
 export async function getWaitlistBySlug(slug: string) {
-  await ensureTables();
-  const { rows } = await sql`
-    SELECT id, user_id as "userId", product_name as "productName", description, slug, button_text as "buttonText", bg_color as "bgColor", max_subscribers as "maxSubscribers", created_at as "createdAt"
-    FROM waitlists
-    WHERE slug = ${slug}
-  `;
-  return (rows[0] as Waitlist) || null;
+  await initDb();
+  const waitlist = await prisma.waitlist.findUnique({
+    where: { slug },
+  });
+  if (!waitlist) return null;
+  return {
+    ...waitlist,
+    createdAt: waitlist.createdAt.toISOString(),
+  };
 }
 
 export async function addSubscriber(waitlistId: string, email: string) {
-  await ensureTables();
+  await initDb();
   const waitlist = await getWaitlistById(waitlistId);
   if (!waitlist) throw new Error('Waitlist not found');
   
   // Check for duplicate
-  const { rows: existing } = await sql`
-    SELECT id FROM subscribers WHERE waitlist_id = ${waitlistId} AND email = ${email}
-  `;
-  if (existing.length > 0) {
+  const existing = await prisma.subscriber.findUnique({
+    where: {
+      waitlistId_email: {
+        waitlistId,
+        email,
+      },
+    },
+  });
+  if (existing) {
     return { status: 'duplicate' };
   }
 
   // Check limit
-  const { rows: countRows } = await sql`
-    SELECT COUNT(*) as count FROM subscribers WHERE waitlist_id = ${waitlistId}
-  `;
-  const currentCount = parseInt(countRows[0].count);
+  const currentCount = await prisma.subscriber.count({
+    where: { waitlistId },
+  });
   if (currentCount >= waitlist.maxSubscribers) {
     return { status: 'full' };
   }
 
-  const id = crypto.randomUUID();
-  await sql`
-    INSERT INTO subscribers (id, waitlist_id, email)
-    VALUES (${id}, ${waitlistId}, ${email})
-  `;
+  await prisma.subscriber.create({
+    data: {
+      waitlistId,
+      email,
+    },
+  });
   return { status: 'success' };
 }
 
 export async function getSubscribers(waitlistId: string) {
-  await ensureTables();
-  const { rows } = await sql`
-    SELECT id, waitlist_id as "waitlistId", email, created_at as "createdAt"
-    FROM subscribers
-    WHERE waitlist_id = ${waitlistId}
-    ORDER BY created_at DESC
-  `;
-  return rows as Subscriber[];
+  await initDb();
+  const subscribers = await prisma.subscriber.findMany({
+    where: { waitlistId },
+    orderBy: { createdAt: 'desc' },
+  });
+  
+  return subscribers.map(s => ({
+    ...s,
+    createdAt: s.createdAt.toISOString(),
+  }));
 }
