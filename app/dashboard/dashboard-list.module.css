@@ -1,0 +1,143 @@
+.container {
+  min-height: 100vh;
+  background-color: var(--zinc-50);
+  padding-bottom: 5rem;
+}
+
+.header {
+  background-color: var(--white);
+  border-bottom: 1px solid var(--zinc-200);
+}
+
+.headerInner {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 1.125rem;
+  letter-spacing: -0.025em;
+}
+
+.userNav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.userEmail {
+  font-size: 0.875rem;
+  color: var(--zinc-500);
+}
+
+.logoutBtn {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--zinc-600);
+  transition: color 0.15s ease-in-out;
+}
+
+.logoutBtn:hover {
+  color: var(--zinc-900);
+}
+
+.main {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.createBtn {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--zinc-900);
+  color: var(--white);
+  border-radius: 0.75rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: background-color 0.15s ease-in-out;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.createBtn:hover {
+  background-color: var(--zinc-800);
+}
+
+.grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.card {
+  background-color: var(--white);
+  border: 1px solid var(--zinc-200);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: box-shadow 0.15s ease-in-out, border-color 0.15s ease-in-out;
+  display: block;
+}
+
+.card:hover {
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+  border-color: var(--zinc-300);
+}
+
+.cardTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--zinc-900);
+}
+
+.cardUrl {
+  font-size: 0.875rem;
+  color: var(--zinc-500);
+  margin-bottom: 1.5rem;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--zinc-100);
+  padding-top: 1rem;
+  font-size: 0.875rem;
+  color: var(--zinc-600);
+}
+
+.empty {
+  text-align: center;
+  padding: 4rem 2rem;
+  background-color: var(--white);
+  border: 1px dashed var(--zinc-300);
+  border-radius: 1rem;
+}
+
+.emptyTitle {
+  font-weight: 600;
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+}
+
+.emptyDesc {
+  color: var(--zinc-500);
+  font-size: 0.875rem;
+}
