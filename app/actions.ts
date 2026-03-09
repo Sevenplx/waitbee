@@ -1,8 +1,9 @@
 'use server'
 
-import { createUser, verifyUser, createWaitlist, addSubscriber, createResetToken, resetPassword } from '@/lib/db';
+import { createUser, verifyUser, createWaitlist, addSubscriber, createResetToken, resetPassword, deleteWaitlist, deleteSubscriber } from '@/lib/db';
 import { setSession, clearSession, getAuthUser } from '@/lib/auth';
 import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
 
 export async function signupAction(formData: FormData) {
   const email = formData.get('email') as string;
@@ -111,4 +112,22 @@ export async function subscribeAction(formData: FormData) {
   } else {
     redirect(`/w/${slug}?msg=success`);
   }
+}
+
+export async function deleteWaitlistAction(id: string) {
+  const user = await getAuthUser();
+  if (!user) {
+    throw new Error('Unauthorized');
+  }
+  await deleteWaitlist(id, user.id);
+  revalidatePath('/dashboard');
+}
+
+export async function deleteSubscriberAction(id: string, waitlistId: string) {
+  const user = await getAuthUser();
+  if (!user) {
+    throw new Error('Unauthorized');
+  }
+  await deleteSubscriber(id, waitlistId, user.id);
+  revalidatePath(`/dashboard/${waitlistId}`);
 }

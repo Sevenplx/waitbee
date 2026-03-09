@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { headers } from 'next/headers';
 import { Rocket, Plus, ExternalLink, Calendar, ArrowRight, LogOut, Layout } from 'lucide-react';
 import { Button } from '@/components/Button';
+import { DeleteWaitlistButton } from '@/components/DeleteWaitlistButton';
 import styles from './dashboard-list.module.css';
 
 export default async function DashboardIndexPage() {
@@ -90,7 +91,10 @@ export default async function DashboardIndexPage() {
                     <Calendar className="w-3 h-3" />
                     {new Date(w.createdAt).toLocaleDateString()}
                   </div>
-                  <span>Manage &rarr;</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span>Manage &rarr;</span>
+                    <DeleteWaitlistButton id={w.id} productName={w.productName} />
+                  </div>
                 </div>
               </Link>
             ))}

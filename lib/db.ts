@@ -1,5 +1,5 @@
 import prisma from './prisma';
-import crypto from 'crypto';
+import * as crypto from 'crypto';
 import { sendConfirmationEmail } from './email';
 
 export interface User {
@@ -367,6 +367,24 @@ export async function addSubscriber(waitlistId: string, email: string) {
   sendConfirmationEmail(email, waitlist.productName).catch(console.error);
 
   return { status: 'success' };
+}
+
+export async function deleteWaitlist(id: string, userId: string) {
+  await initDb();
+  const waitlist = await prisma.waitlist.findUnique({ where: { id } });
+  if (!waitlist || waitlist.userId !== userId) {
+    throw new Error('Unauthorized or not found');
+  }
+  await prisma.waitlist.delete({ where: { id } });
+}
+
+export async function deleteSubscriber(id: string, waitlistId: string, userId: string) {
+  await initDb();
+  const waitlist = await prisma.waitlist.findUnique({ where: { id: waitlistId } });
+  if (!waitlist || waitlist.userId !== userId) {
+    throw new Error('Unauthorized or not found');
+  }
+  await prisma.subscriber.delete({ where: { id } });
 }
 
 export async function getSubscribers(waitlistId: string) {

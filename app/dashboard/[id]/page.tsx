@@ -4,6 +4,7 @@ import { notFound, redirect } from 'next/navigation';
 import { Download, ExternalLink, ArrowLeft } from 'lucide-react';
 import { headers } from 'next/headers';
 import Link from 'next/link';
+import { DeleteSubscriberButton } from '@/components/DeleteSubscriberButton';
 import styles from './dashboard.module.css';
 
 export default async function DashboardPage({ params }: { params: Promise<{ id: string }> }) {
@@ -87,6 +88,7 @@ export default async function DashboardPage({ params }: { params: Promise<{ id: 
                   <tr>
                     <th className={styles.th}>Email</th>
                     <th className={`${styles.th} ${styles.thRight}`}>Joined At</th>
+                    <th className={styles.th} style={{ width: '40px' }}></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -101,6 +103,9 @@ export default async function DashboardPage({ params }: { params: Promise<{ id: 
                           hour: '2-digit',
                           minute: '2-digit'
                         })}
+                      </td>
+                      <td className={styles.td}>
+                        <DeleteSubscriberButton id={sub.id} waitlistId={waitlist.id} email={sub.email} />
                       </td>
                     </tr>
                   ))}
