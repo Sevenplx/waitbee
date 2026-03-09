@@ -5,6 +5,106 @@
   font-family: var(--font-sans);
 }
 
+/* Navbar Container */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #f0f0f0;
+  height: 72px;
+  background-color: #ffffff;
+}
+
+/* Left: Logo Section */
+.logoSection {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1; /* Occupies left space */
+}
+
+.logoIcon {
+  width: 32px;
+  height: 32px;
+  background-color: #000;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 18px;
+}
+
+.brandName {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #000;
+  letter-spacing: -0.5px;
+}
+
+/* Middle: Nav Links */
+.navLinks {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  flex: 2; /* Occupies center space */
+}
+
+.navLinks a {
+  text-decoration: none;
+  color: #666;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.navLinks a:hover {
+  color: #000;
+}
+
+/* Right: Action Buttons */
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  justify-content: flex-end;
+  flex: 1; /* Occupies right space */
+}
+
+.loginLink {
+  text-decoration: none;
+  color: #666;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.btnGetStarted {
+  background-color: #000;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: transform 0.1s ease, background-color 0.2s ease;
+}
+
+.btnGetStarted:hover {
+  background-color: #333;
+}
+
+.btnGetStarted:active {
+  transform: scale(0.98);
+}
+
+/* Responsive: Stack for Mobile */
+@media (max-width: 768px) {
+  .navLinks {
+      display: none; /* Usually hidden behind a hamburger menu on mobile */
+  }
+}
+
 .main {
   max-width: 80rem;
   margin: 0 auto;

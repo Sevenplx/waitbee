@@ -7,27 +7,25 @@ export default function LandingPage() {
   return (
     <div className={styles.container}>
       {/* Navigation */}
-      <nav className="flex items-center justify-between px-8 border-b border-[#f0f0f0] h-[72px] bg-white">
-        <div className="flex items-center gap-[10px] flex-1">
-          <div className="w-8 h-8 bg-black rounded-lg flex items-center justify-center text-white">
-            <Rocket className="w-5 h-5" />
+      <nav className={styles.navbar}>
+        <div className={styles.logoSection}>
+          <div className={styles.logoIcon}>
+            <Rocket className="w-5 h-5 text-white" />
           </div>
-          <span className="font-bold text-xl text-black tracking-[-0.5px]">WaitlistBuilder</span>
+          <span className={styles.brandName}>WaitlistBuilder</span>
         </div>
 
-        <div className="hidden md:flex gap-8 justify-center flex-[2]">
-          <Link href="#features" className="text-[#666] text-[0.95rem] font-medium transition-colors duration-200 hover:text-black">Features</Link>
-          <Link href="#pricing" className="text-[#666] text-[0.95rem] font-medium transition-colors duration-200 hover:text-black">Pricing</Link>
-          <Link href="#integrations" className="text-[#666] text-[0.95rem] font-medium transition-colors duration-200 hover:text-black">Integrations</Link>
-          <Link href="#blog" className="text-[#666] text-[0.95rem] font-medium transition-colors duration-200 hover:text-black">Blog</Link>
+        <div className={styles.navLinks}>
+          <Link href="#features">Features</Link>
+          <Link href="#pricing">Pricing</Link>
+          <Link href="#integrations">Integrations</Link>
+          <Link href="#blog">Blog</Link>
         </div>
 
-        <div className="flex items-center gap-6 justify-end flex-1">
-          <Link href="/login" className="text-[#666] text-[0.95rem] font-medium hover:text-black transition-colors duration-200">Log in</Link>
-          <Link href="/signup">
-            <button className="bg-black text-white px-5 py-[10px] rounded-lg text-[0.95rem] font-semibold transition-all duration-200 hover:bg-[#333] active:scale-[0.98]">
-              Get Started
-            </button>
+        <div className={styles.navActions}>
+          <Link href="/login" className={styles.loginLink}>Log in</Link>
+          <Link href="/signup" className={styles.btnGetStarted}>
+            Get Started
           </Link>
         </div>
       </nav>
