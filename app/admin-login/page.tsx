@@ -47,8 +47,8 @@ export default function AdminLoginPage() {
         </div>
         
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold tracking-tight mb-2">Admin Login</h1>
-          <p className="text-zinc-500">Access your waitlist dashboard.</p>
+          <h1 className="text-2xl font-bold tracking-tight mb-2">Owner Portal</h1>
+          <p className="text-zinc-500">Sign in to manage the platform.</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
