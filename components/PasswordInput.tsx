@@ -10,9 +10,11 @@ interface PasswordInputProps {
   placeholder: string;
   minLength?: number;
   required?: boolean;
+  className?: string;
+  style?: React.CSSProperties;
 }
 
-export default function PasswordInput({ id, name, placeholder, minLength, required }: PasswordInputProps) {
+export default function PasswordInput({ id, name, placeholder, minLength, required, className, style }: PasswordInputProps) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -23,9 +25,9 @@ export default function PasswordInput({ id, name, placeholder, minLength, requir
         name={name} 
         required={required} 
         placeholder={placeholder}
-        className={styles.input}
+        className={className || styles.input}
         minLength={minLength}
-        style={{ paddingRight: '2.5rem' }}
+        style={{ ...style, paddingRight: '2.5rem' }}
       />
       <button
         type="button"

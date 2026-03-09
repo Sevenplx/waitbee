@@ -1,26 +1,43 @@
 import { cookies } from 'next/headers';
-import { createSession, getSession, getUserById } from './db';
+import { SignJWT, jwtVerify } from 'jose';
+import { getUserById } from './db';
+
+const secret = new TextEncoder().encode(
+  process.env.JWT_SECRET || 'default-secret-for-development-only'
+);
 
 export async function setSession(userId: string) {
-  const session = await createSession(userId);
+  const token = await new SignJWT({ userId })
+    .setProtectedHeader({ alg: 'HS256' })
+    .setIssuedAt()
+    .setExpirationTime('7d')
+    .sign(secret);
+
   const cookieStore = await cookies();
-  cookieStore.set('session_id', session.id, {
+  cookieStore.set('session_id', token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    secure: true, // Required for SameSite=None
+    sameSite: 'none', // Required for cross-origin iframe
+    path: '/',
     maxAge: 60 * 60 * 24 * 7, // 1 week
   });
 }
 
 export async function getAuthUser() {
   const cookieStore = await cookies();
-  const sessionId = cookieStore.get('session_id')?.value;
-  if (!sessionId) return null;
+  const token = cookieStore.get('session_id')?.value;
+  if (!token) return null;
   
-  const session = await getSession(sessionId);
-  if (!session || new Date(session.expiresAt) < new Date()) return null;
-  
-  return await getUserById(session.userId);
+  try {
+    const { payload } = await jwtVerify(token, secret);
+    const userId = payload.userId as string;
+    if (!userId) return null;
+    
+    return await getUserById(userId);
+  } catch (e) {
+    console.error('JWT verification failed:', e);
+    return null;
+  }
 }
 
 export async function clearSession() {

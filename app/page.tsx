@@ -1,114 +1,118 @@
 import Link from 'next/link';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
-import { getAuthUser } from '@/lib/auth';
-import styles from './page.module.css';
+import { ArrowRight, Zap, Shield, Rocket, CheckCircle2 } from 'lucide-react';
+import { Button } from '@/components/Button';
+import styles from './landing.module.css';
 
-export default async function Home() {
-  const user = await getAuthUser();
-
+export default function LandingPage() {
   return (
     <div className={styles.container}>
-      {/* Navbar */}
-      <header className={styles.header}>
-        <div className={styles.logo}>WaitlistBuilder</div>
-        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-          {user ? (
-            <Link href="/dashboard" className={styles.navLink}>
-              Dashboard
-            </Link>
-          ) : (
-            <>
-              <Link href="/login" className={styles.navLink}>
-                Log in
-              </Link>
-              <Link href="/signup" className={styles.navLink}>
-                Sign up
-              </Link>
-            </>
-          )}
-        </div>
-      </header>
-
-      {/* Hero */}
-      <main className={styles.hero}>
-        <h1 className={styles.heroTitle}>
-          Create a Waitlist Page <br className={styles.heroTitleBr} /> in 60 Seconds
-        </h1>
-        <p className={styles.heroSubtitle}>
-          Validate your idea, collect early users, and build hype. No bloated features, no complex dashboards. Just a minimal, fast, no-BS waitlist builder.
-        </p>
-        <Link 
-          href="/create" 
-          className={styles.ctaButton}
-        >
-          Create My Waitlist
-          <ArrowRight className={styles.ctaIcon} />
-        </Link>
-      </main>
-
-      {/* How it works */}
-      <section className={styles.howItWorks}>
-        <div className={styles.sectionInner}>
-          <h2 className={styles.sectionTitle}>How it works</h2>
-          <div className={styles.grid3}>
-            <div className={styles.stepCard}>
-              <div className={styles.stepNumber}>1</div>
-              <h3 className={styles.stepTitle}>Create page</h3>
-              <p className={styles.stepDesc}>Enter your product details and customize the look in seconds.</p>
-            </div>
-            <div className={styles.stepCard}>
-              <div className={styles.stepNumber}>2</div>
-              <h3 className={styles.stepTitle}>Share link</h3>
-              <p className={styles.stepDesc}>Get a unique URL instantly. Share it on Twitter, LinkedIn, or your network.</p>
-            </div>
-            <div className={styles.stepCard}>
-              <div className={styles.stepNumber}>3</div>
-              <h3 className={styles.stepTitle}>Collect emails</h3>
-              <p className={styles.stepDesc}>Watch your list grow. Export to CSV anytime from your simple dashboard.</p>
-            </div>
+      {/* Navigation */}
+      <nav className={styles.nav}>
+        <div className={styles.logoWrapper}>
+          <div className={styles.logoIcon}>
+            <Rocket className="w-5 h-5 text-white" />
           </div>
+          <span>WaitlistBuilder</span>
         </div>
-      </section>
+        <div className={styles.navLinks}>
+          <Link href="#features" className={styles.navLink}>Features</Link>
+          <Link href="#pricing" className={styles.navLink}>Pricing</Link>
+          <Link href="/login" className={styles.navLink}>Login</Link>
+          <Link href="/signup">
+            <Button size="sm">Get Started</Button>
+          </Link>
+        </div>
+        <div className="md:hidden">
+          <Link href="/login">
+            <Button size="sm" variant="outline">Login</Button>
+          </Link>
+        </div>
+      </nav>
 
-      {/* Pricing */}
-      <section className={styles.pricing}>
-        <h2 className={styles.sectionTitle}>Simple Pricing</h2>
-        <div className={styles.pricingGrid}>
-          {/* Free Tier */}
-          <div className={styles.pricingCard}>
-            <h3 className={styles.planName}>Free</h3>
-            <p className={styles.planDesc}>Perfect for validating a single idea.</p>
-            <div className={styles.planPrice}>$0<span>/mo</span></div>
-            <ul className={styles.featureList}>
-              <li className={styles.featureItem}><CheckCircle2 className={styles.featureIcon} /> 1 waitlist</li>
-              <li className={styles.featureItem}><CheckCircle2 className={styles.featureIcon} /> 100 emails max</li>
-              <li className={styles.featureItem}><CheckCircle2 className={styles.featureIcon} /> Standard branding</li>
-            </ul>
-            <Link href="/create" className={styles.planButton}>
-              Get Started
-            </Link>
+      {/* Hero Section */}
+      <main className={styles.main}>
+        <div className={styles.hero}>
+          <div className={styles.badge}>
+            <Zap className="w-3 h-3" />
+            <span>Now in Public Beta</span>
           </div>
           
-          {/* Pro Tier */}
-          <div className={styles.pricingCardPro}>
-            <div className={styles.badge}>
-              Coming Soon
-            </div>
-            <h3 className={styles.planName}>Pro</h3>
-            <p className={styles.planDesc}>For serious founders and creators.</p>
-            <div className={styles.planPrice}>$9<span>/mo</span></div>
-            <ul className={styles.featureList}>
-              <li className={styles.featureItem}><CheckCircle2 className={styles.featureIcon} /> Unlimited waitlists</li>
-              <li className={styles.featureItem}><CheckCircle2 className={styles.featureIcon} /> Unlimited emails</li>
-              <li className={styles.featureItem}><CheckCircle2 className={styles.featureIcon} /> No branding</li>
-              <li className={styles.featureItem}><CheckCircle2 className={styles.featureIcon} /> CSV export</li>
-            </ul>
-            <button disabled className={styles.planButtonPro}>
-              Coming Soon
-            </button>
+          <h1 className={styles.title}>
+            Launch your product <br />
+            <span className={styles.titleAccent}>with a viral waitlist.</span>
+          </h1>
+          
+          <p className={styles.description}>
+            The simplest way to build, manage, and scale your product&apos;s early access. 
+            Join 1,000+ founders who use WaitlistBuilder to capture their first users.
+          </p>
+
+          <div className={styles.ctaGroup}>
+            <Link href="/signup">
+              <Button size="lg" icon={<ArrowRight className="w-4 h-4" />}>
+                Start Building for Free
+              </Button>
+            </Link>
+            <Link href="/login">
+              <Button size="lg" variant="outline">
+                View Dashboard
+              </Button>
+            </Link>
           </div>
         </div>
-      </section>
+
+        {/* Features Grid */}
+        <div id="features" className={styles.features}>
+          <div className={styles.feature}>
+            <div className={styles.featureIcon}>
+              <Zap className="w-6 h-6 text-zinc-900" />
+            </div>
+            <h3 className={styles.featureTitle}>Lightning Fast Setup</h3>
+            <p className={styles.featureDesc}>
+              Create a beautiful, high-converting waitlist page in under 60 seconds. 
+              No code required, just your product name and a vision.
+            </p>
+          </div>
+          <div className={styles.feature}>
+            <div className={styles.featureIcon}>
+              <Shield className="w-6 h-6 text-zinc-900" />
+            </div>
+            <h3 className={styles.featureTitle}>Powerful Analytics</h3>
+            <p className={styles.featureDesc}>
+              Track your growth with real-time analytics. See where your users are coming from 
+              and which channels are driving the most conversions.
+            </p>
+          </div>
+          <div className={styles.feature}>
+            <div className={styles.featureIcon}>
+              <Rocket className="w-6 h-6 text-zinc-900" />
+            </div>
+            <h3 className={styles.featureTitle}>Built to Scale</h3>
+            <p className={styles.featureDesc}>
+              Whether you have 10 or 10 million signups, our infrastructure handles it all. 
+              Focus on building your product while we handle the traffic.
+            </p>
+          </div>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className={styles.footer}>
+        <div className={styles.footerInner}>
+          <div className={styles.footerLogo}>
+            <Rocket className="w-4 h-4" />
+            <span>WaitlistBuilder</span>
+          </div>
+          <p className={styles.footerText}>
+            © 2026 WaitlistBuilder Inc. All rights reserved.
+          </p>
+          <div className={styles.footerLinks}>
+            <Link href="#" className={styles.footerLink}>Twitter</Link>
+            <Link href="#" className={styles.footerLink}>GitHub</Link>
+            <Link href="/admin-login" className={styles.footerLink}>Admin</Link>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

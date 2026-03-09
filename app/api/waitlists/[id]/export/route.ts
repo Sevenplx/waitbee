@@ -18,7 +18,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
   const subscribers = await getSubscribers(waitlist.id);
   
   const csvHeader = 'Email,Joined At\n';
-  const csvRows = subscribers.map(sub => `${sub.email},${sub.createdAt}`).join('\n');
+  const csvRows = subscribers.map((sub: { email: string; createdAt: string }) => `${sub.email},${sub.createdAt}`).join('\n');
   const csvContent = csvHeader + csvRows;
 
   return new NextResponse(csvContent, {

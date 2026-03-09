@@ -2,6 +2,7 @@
   --zinc-50: #fafafa;
   --zinc-100: #f4f4f5;
   --zinc-200: #e4e4e7;
+  --zinc-300: #d4d4d8;
   --zinc-400: #a1a1aa;
   --zinc-500: #71717a;
   --zinc-600: #52525b;
@@ -109,3 +110,17 @@ table {
 .bg-purple-50 { background-color: var(--purple-50); }
 .bg-emerald-50 { background-color: var(--emerald-50); }
 .bg-zinc-900 { background-color: var(--zinc-900); }
+
+/* Layout Utilities */
+.max-w-7xl { max-width: 80rem; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+.px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+.py-8 { padding-top: 2rem; padding-bottom: 2rem; }
+.flex { display: flex; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-2 { gap: 0.5rem; }
+.gap-6 { gap: 1.5rem; }
+.font-bold { font-weight: 700; }
+.text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+.tracking-tight { letter-spacing: -0.025em; }

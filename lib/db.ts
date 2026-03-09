@@ -1,5 +1,6 @@
 import prisma from './prisma';
 import crypto from 'crypto';
+import { sendConfirmationEmail } from './email';
 
 export interface User {
   id: string;
@@ -90,10 +91,16 @@ async function ensureTables() {
         UNIQUE(waitlist_id, email)
       );
     `;
+    await prisma.$executeRaw`
+      CREATE TABLE IF NOT EXISTS waitlist_entries (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        email TEXT UNIQUE NOT NULL,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      );
+    `;
     console.log('Database tables verified/created');
   } catch (error) {
     console.error('Error ensuring tables exist:', error);
-    // Don't throw here, as Prisma might still work if tables exist but check failed
   }
 }
 
@@ -110,6 +117,35 @@ function hashPassword(password: string): string {
   const salt = crypto.randomBytes(16).toString('hex');
   const derivedKey = crypto.scryptSync(password, salt, 64).toString('hex');
   return `${salt}:${derivedKey}`;
+}
+
+export async function addWaitlistEntry(email: string) {
+  await initDb();
+  try {
+    const entry = await prisma.waitlistEntry.create({
+      data: { email },
+    });
+    return { success: true, entry };
+  } catch (error: any) {
+    if (error.code === 'P2002') {
+      return { success: false, error: 'already_joined' };
+    }
+    throw error;
+  }
+}
+
+export async function getWaitlistEntries() {
+  await initDb();
+  return await prisma.waitlistEntry.findMany({
+    orderBy: { createdAt: 'desc' },
+  });
+}
+
+export async function deleteWaitlistEntry(id: string) {
+  await initDb();
+  await prisma.waitlistEntry.delete({
+    where: { id },
+  });
 }
 
 export async function createUser(email: string, password: string): Promise<User> {
@@ -326,6 +362,10 @@ export async function addSubscriber(waitlistId: string, email: string) {
       email,
     },
   });
+
+  // Send confirmation email asynchronously
+  sendConfirmationEmail(email, waitlist.productName).catch(console.error);
+
   return { status: 'success' };
 }
 

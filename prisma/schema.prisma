@@ -64,3 +64,11 @@ model Subscriber {
   @@unique([waitlistId, email])
   @@map("subscribers")
 }
+
+model WaitlistEntry {
+  id        String   @id @default(uuid()) @db.Uuid
+  email     String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("waitlist_entries")
+}
