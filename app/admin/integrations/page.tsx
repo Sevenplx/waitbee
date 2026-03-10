@@ -34,11 +34,11 @@ export default function IntegrationsPage() {
               <div className={styles.settingsForm}>
                 <div>
                   <label className="block text-sm font-medium text-zinc-700 mb-1">API Key</label>
-                  <input type="password" placeholder="SG.xxxxxxxxxxxxxxxxxxxx" className="w-full px-4 py-2 rounded-lg border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-black" defaultValue="SG.fakeapikey12345" />
+                  <input type="password" placeholder="SG.xxxxxxxxxxxxxxxxxxxx" className={styles.adminInput} defaultValue="SG.fakeapikey12345" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-zinc-700 mb-1">From Email Address</label>
-                  <input type="email" className="w-full px-4 py-2 rounded-lg border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-black" defaultValue="hello@waitlistbuilder.com" />
+                  <input type="email" className={styles.adminInput} defaultValue="hello@waitlistbuilder.com" />
                 </div>
               </div>
             </div>
@@ -55,7 +55,7 @@ export default function IntegrationsPage() {
               <div className={styles.settingsForm}>
                 <div>
                   <label className="block text-sm font-medium text-zinc-700 mb-1">Measurement ID</label>
-                  <input type="text" placeholder="G-XXXXXXXXXX" className="w-full px-4 py-2 rounded-lg border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-black" />
+                  <input type="text" placeholder="G-XXXXXXXXXX" className={styles.adminInput} />
                 </div>
                 <label className={styles.toggleLabel}>
                   <div className={styles.toggleSwitch}>
@@ -83,15 +83,15 @@ export default function IntegrationsPage() {
               <div className={styles.settingsForm}>
                 <div>
                   <label className="block text-sm font-medium text-zinc-700 mb-1">Publishable Key</label>
-                  <input type="text" placeholder="pk_test_..." className="w-full px-4 py-2 rounded-lg border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-black" />
+                  <input type="text" placeholder="pk_test_..." className={styles.adminInput} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-zinc-700 mb-1">Secret Key</label>
-                  <input type="password" placeholder="sk_test_..." className="w-full px-4 py-2 rounded-lg border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-black" />
+                  <input type="password" placeholder="sk_test_..." className={styles.adminInput} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-zinc-700 mb-1">Webhook Secret</label>
-                  <input type="password" placeholder="whsec_..." className="w-full px-4 py-2 rounded-lg border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-black" />
+                  <input type="password" placeholder="whsec_..." className={styles.adminInput} />
                 </div>
               </div>
             </div>
@@ -108,7 +108,7 @@ export default function IntegrationsPage() {
               <div className={styles.settingsForm}>
                 <div>
                   <label className="block text-sm font-medium text-zinc-700 mb-1">Endpoint URL</label>
-                  <input type="url" placeholder="https://hooks.zapier.com/..." className="w-full px-4 py-2 rounded-lg border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-black" />
+                  <input type="url" placeholder="https://hooks.zapier.com/..." className={styles.adminInput} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-zinc-700 mb-1">Events to send</label>

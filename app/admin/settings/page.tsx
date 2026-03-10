@@ -28,27 +28,27 @@ export default function SettingsPage() {
               <div className={styles.settingsForm}>
                 <div>
                   <label className="block text-sm font-medium text-zinc-700 mb-1">Site Name</label>
-                  <input type="text" className="w-full px-4 py-2 rounded-lg border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-black" defaultValue="WaitlistBuilder" />
+                  <input type="text" className={styles.adminInput} defaultValue="WaitlistBuilder" />
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                   <div>
                     <label className="block text-sm font-medium text-zinc-700 mb-1">Primary Color</label>
                     <div style={{ display: 'flex', gap: '0.5rem' }}>
                       <input type="color" defaultValue="#000000" className="h-10 w-10 rounded cursor-pointer border-0 p-0" />
-                      <input type="text" className="flex-1 px-4 py-2 rounded-lg border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-black" defaultValue="#000000" />
+                      <input type="text" className={styles.adminInput} defaultValue="#000000" />
                     </div>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-zinc-700 mb-1">Accent Color</label>
                     <div style={{ display: 'flex', gap: '0.5rem' }}>
                       <input type="color" defaultValue="#3b82f6" className="h-10 w-10 rounded cursor-pointer border-0 p-0" />
-                      <input type="text" className="flex-1 px-4 py-2 rounded-lg border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-black" defaultValue="#3b82f6" />
+                      <input type="text" className={styles.adminInput} defaultValue="#3b82f6" />
                     </div>
                   </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-zinc-700 mb-1">Logo URL</label>
-                  <input type="text" className="w-full px-4 py-2 rounded-lg border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-black" placeholder="https://..." />
+                  <input type="text" className={styles.adminInput} placeholder="https://..." />
                 </div>
               </div>
             </div>
@@ -63,15 +63,17 @@ export default function SettingsPage() {
               <div className={styles.settingsForm}>
                 <div>
                   <label className="block text-sm font-medium text-zinc-700 mb-1">Hero Title</label>
-                  <input type="text" className="w-full px-4 py-2 rounded-lg border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-black" defaultValue="Build Your Waitlist in Minutes" />
+                  <input type="text" className={styles.adminInput} defaultValue="Build Your Waitlist in Minutes" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-zinc-700 mb-1">Hero Subtitle</label>
-                  <textarea className="w-full px-4 py-2 rounded-lg border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-black" rows={3} defaultValue="The easiest way to capture leads and validate your idea before you build."></textarea>
+                  <div style={{ display: 'flex' }}>
+                    <textarea className={styles.adminTextarea} rows={3} defaultValue="The easiest way to capture leads and validate your idea before you build."></textarea>
+                  </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-zinc-700 mb-1">CTA Button Text</label>
-                  <input type="text" className="w-full px-4 py-2 rounded-lg border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-black" defaultValue="Start for free" />
+                  <input type="text" className={styles.adminInput} defaultValue="Start for free" />
                 </div>
               </div>
             </div>
@@ -90,7 +92,7 @@ export default function SettingsPage() {
               <div className={styles.settingsForm}>
                 <div>
                   <label className="block text-sm font-medium text-zinc-700 mb-1">Main Domain</label>
-                  <input type="text" className="w-full px-4 py-2 rounded-lg border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-black" defaultValue="waitlistbuilder.com" />
+                  <input type="text" className={styles.adminInput} defaultValue="waitlistbuilder.com" />
                 </div>
                 <label className={styles.toggleLabel}>
                   <div className={styles.toggleSwitch}>
@@ -119,7 +121,9 @@ export default function SettingsPage() {
                 </label>
                 <div>
                   <label className="block text-sm font-medium text-zinc-700 mb-1">Maintenance Message</label>
-                  <textarea className="w-full px-4 py-2 rounded-lg border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-black" rows={3} defaultValue="We are currently performing scheduled maintenance. We'll be back shortly."></textarea>
+                  <div style={{ display: 'flex' }}>
+                    <textarea className={styles.adminTextarea} rows={3} defaultValue="We are currently performing scheduled maintenance. We'll be back shortly."></textarea>
+                  </div>
                 </div>
               </div>
             </div>
