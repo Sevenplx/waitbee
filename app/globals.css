@@ -42,6 +42,22 @@ html {
   font-family: var(--font-sans);
 }
 
+html::-webkit-scrollbar {
+  width: 7px; /* Width for vertical scrollbar */
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background-color: var(--zinc-400); /* Width for vertical scrollbar */
+}
+
+html::-webkit-scrollbar-thumb {
+  background-color: var(--zinc-300); /* Color of the thumb */
+}
+
+html::-webkit-scrollbar-track {
+  background-color: var(--zinc-100); /* Color of the track */
+}
+
 body {
   margin: 0;
   line-height: inherit;
@@ -109,7 +125,7 @@ table {
 .bg-blue-50 { background-color: var(--blue-50); }
 .bg-purple-50 { background-color: var(--purple-50); }
 .bg-emerald-50 { background-color: var(--emerald-50); }
-.bg-zinc-900 { background-color: var(--zinc-900); }
+
 
 /* Layout Utilities */
 .max-w-7xl { max-width: 80rem; }

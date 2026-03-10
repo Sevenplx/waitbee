@@ -1,46 +1,58 @@
 import { cookies } from 'next/headers';
-import { SignJWT, jwtVerify } from 'jose';
 import { getUserById } from './db';
+import {
+  createUserToken,
+  createAdminToken,
+  verifyUserToken,
+  verifyAdminToken,
+  USER_SESSION_COOKIE,
+  ADMIN_SESSION_COOKIE,
+  COOKIE_OPTIONS,
+} from './session';
 
-const secret = new TextEncoder().encode(
-  process.env.JWT_SECRET || 'default-secret-for-development-only'
-);
+// ── User Session ────────────────────────────────────────────────────────────
 
-export async function setSession(userId: string) {
-  const token = await new SignJWT({ userId })
-    .setProtectedHeader({ alg: 'HS256' })
-    .setIssuedAt()
-    .setExpirationTime('7d')
-    .sign(secret);
-
+export async function setUserSession(userId: string, email: string) {
+  const token = await createUserToken(userId, email);
   const cookieStore = await cookies();
-  cookieStore.set('session_id', token, {
-    httpOnly: true,
-    secure: true, // Required for SameSite=None
-    sameSite: 'none', // Required for cross-origin iframe
-    path: '/',
-    maxAge: 60 * 60 * 24 * 7, // 1 week
-  });
+  cookieStore.set(USER_SESSION_COOKIE, token, COOKIE_OPTIONS);
 }
 
 export async function getAuthUser() {
   const cookieStore = await cookies();
-  const token = cookieStore.get('session_id')?.value;
+  const token = cookieStore.get(USER_SESSION_COOKIE)?.value;
   if (!token) return null;
-  
-  try {
-    const { payload } = await jwtVerify(token, secret);
-    const userId = payload.userId as string;
-    if (!userId) return null;
-    
-    return await getUserById(userId);
-  } catch (e) {
-    console.error('JWT verification failed:', e);
-    return null;
-  }
+  const payload = await verifyUserToken(token);
+  if (!payload) return null;
+  return await getUserById(payload.userId);
 }
 
-export async function clearSession() {
+export async function clearUserSession() {
   const cookieStore = await cookies();
-  cookieStore.delete('session_id');
+  cookieStore.delete(USER_SESSION_COOKIE);
 }
+
+// ── Admin Session ───────────────────────────────────────────────────────────
+
+export async function setAdminSession(userId: string, email: string) {
+  const token = await createAdminToken(userId, email);
+  const cookieStore = await cookies();
+  cookieStore.set(ADMIN_SESSION_COOKIE, token, COOKIE_OPTIONS);
+}
+
+export async function getAdminUser() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get(ADMIN_SESSION_COOKIE)?.value;
+  if (!token) return null;
+  const payload = await verifyAdminToken(token);
+  if (!payload) return null;
+  return await getUserById(payload.userId);
+}
+
+export async function clearAdminSession() {
+  const cookieStore = await cookies();
+  cookieStore.delete(ADMIN_SESSION_COOKIE);
+}
+
+// Legacy alias — keeps any existing calls to clearSession() working
+export { clearUserSession as clearSession };

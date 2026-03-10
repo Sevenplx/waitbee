@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ArrowRight, Zap, Shield, Rocket, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/Button';
 import styles from './landing.module.css';
+import GithubStar from '@/components/GithubStar';
 
 export default function LandingPage() {
   return (
@@ -17,9 +18,7 @@ export default function LandingPage() {
 
         <div className={styles.navLinks}>
           <Link href="#features">Features</Link>
-          <Link href="#pricing">Pricing</Link>
-          <Link href="#integrations">Integrations</Link>
-          <Link href="#blog">Blog</Link>
+          <Link href="https://github.com/sevenplx/waitlist-builder">GitHub</Link>
         </div>
 
         <div className={styles.navActions}>
@@ -27,6 +26,10 @@ export default function LandingPage() {
           <Link href="/signup" className={styles.btnGetStarted}>
             Get Started
           </Link>
+          {/* GitHub Star */}
+          <div style={{ marginLeft: '1rem' }}>
+            <GithubStar />
+          </div>
         </div>
       </nav>
 
@@ -44,8 +47,8 @@ export default function LandingPage() {
           </h1>
           
           <p className={styles.description}>
-            The simplest way to build, manage, and scale your product&apos;s early access. 
-            Join 1,000+ founders who use WaitlistBuilder to capture their first users.
+            An open waitlist builder for indie founders and side projects.
+            Launch fast, collect emails, and build hype before your product goes live.
           </p>
 
           <div className={styles.ctaGroup}>
@@ -61,6 +64,24 @@ export default function LandingPage() {
             </Link>
           </div>
         </div>
+
+        {/* How it works */}
+        <div className={styles.heroContainer}>
+  <div className={styles.heroText}>
+    {/* Your existing hero content: badge, title, description, buttons */}
+  </div>
+
+  {/* <div className={styles.heroVideo}>
+    <iframe
+      width="560"
+      height="315"
+      src="https://www.youtube.com/embed/F0OkwXKcPSE?si=o92WswUDzb8Fl8ir"
+      title="How it works and walkthrough"
+      frameBorder="0"
+      allowFullScreen
+    ></iframe>
+  </div> */}
+</div>
 
         {/* Features Grid */}
         <div id="features" className={styles.features}>
@@ -105,12 +126,18 @@ export default function LandingPage() {
             <span>WaitlistBuilder</span>
           </div>
           <p className={styles.footerText}>
-            © 2026 WaitlistBuilder Inc. All rights reserved.
+            Built by <a href="https://github.com/sevenplx">Chemitha Sathsilu</a> ♥ Open Source
           </p>
           <div className={styles.footerLinks}>
-            <Link href="#" className={styles.footerLink}>Twitter</Link>
-            <Link href="#" className={styles.footerLink}>GitHub</Link>
-            <Link href="/admin-login" className={styles.footerLink}>Admin</Link>
+            <Link href="https://github.com/Sevenplx/waitlist-builder" className={styles.footerLink} target="_blank">
+              GitHub
+            </Link>
+            <Link href="https://github.com/Sevenplx/autonin/issues/new" className={styles.footerLink} target="_blank">
+              Report Bug
+            </Link>
+            <Link href="/admin-login" className={styles.footerLink}>
+              Admin
+            </Link>
           </div>
         </div>
       </footer>

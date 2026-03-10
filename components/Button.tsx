@@ -33,10 +33,12 @@ export const Button: React.FC<ButtonProps> = ({
     >
       {isLoading ? (
         <Loader2 className={styles.loader} size={16} />
-      ) : icon ? (
-        <span className={styles.icon}>{icon}</span>
-      ) : null}
-      {children}
+      ) : (
+        <>
+          {icon && <span className={styles.icon}>{icon}</span>}
+          {children}
+        </>
+      )}
     </button>
   );
 };

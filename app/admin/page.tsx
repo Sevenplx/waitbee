@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Users, Activity, TrendingUp, DollarSign, List, ArrowUpRight, ArrowDownRight, Loader2 } from 'lucide-react';
+import { Skeleton } from '@/components/Skeleton';
 import styles from '../admin.module.css';
 
 interface DashboardStats {
@@ -42,8 +43,61 @@ export default function AdminDashboard() {
 
   if (isLoading) {
     return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-        <Loader2 className="w-8 h-8 animate-spin text-zinc-400" />
+      <div>
+        <div className={styles.pageHeader}>
+          <div>
+            <Skeleton width="250px" height="2.5rem" className="mb-2" />
+            <Skeleton width="400px" height="1rem" />
+          </div>
+          <div className={styles.headerActions}>
+            <Skeleton width="120px" height="2.5rem" borderRadius="0.375rem" />
+            <Skeleton width="120px" height="2.5rem" borderRadius="0.375rem" />
+          </div>
+        </div>
+
+        <div className={styles.statsGrid}>
+          {[1, 2, 3, 4].map(i => (
+            <div key={i} className={styles.statCard}>
+              <div className={styles.statHeader}>
+                <Skeleton width="100px" height="0.875rem" />
+                <Skeleton width="2rem" height="2rem" circle />
+              </div>
+              <div className={styles.statValueContainer}>
+                <Skeleton width="60px" height="2rem" />
+                <Skeleton width="40px" height="1rem" />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className={styles.contentGrid}>
+          <div className={styles.panel}>
+            <div className={styles.panelHeader}>
+              <Skeleton width="150px" height="1.5rem" />
+            </div>
+            <div className={styles.activityList}>
+              {[1, 2, 3, 4].map(i => (
+                <div key={i} className={styles.activityItem}>
+                  <Skeleton width="2rem" height="2rem" circle className="mr-3" />
+                  <div className={styles.activityContent}>
+                    <Skeleton width="150px" height="1rem" className="mb-1" />
+                    <Skeleton width="250px" height="0.875rem" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className={styles.panel}>
+            <div className={styles.panelHeader}>
+              <Skeleton width="120px" height="1.5rem" />
+            </div>
+            <div className={styles.quickActionsList}>
+              {[1, 2, 3, 4].map(i => (
+                <Skeleton key={i} width="100%" height="3rem" borderRadius="0.5rem" className="mb-2" />
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

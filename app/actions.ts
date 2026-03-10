@@ -1,7 +1,7 @@
 'use server'
 
 import { createUser, verifyUser, createWaitlist, addSubscriber, createResetToken, resetPassword, deleteWaitlist, deleteSubscriber } from '@/lib/db';
-import { setSession, clearSession, getAuthUser } from '@/lib/auth';
+import { setUserSession, clearUserSession, getAuthUser } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 
@@ -12,7 +12,7 @@ export async function signupAction(formData: FormData) {
   let success = false;
   try {
     const user = await createUser(email, password);
-    await setSession(user.id);
+    await setUserSession(user.id, email);
     success = true;
   } catch (e: any) {
     console.error('Signup error:', e);
@@ -37,7 +37,7 @@ export async function loginAction(formData: FormData) {
     if (!user) {
       redirect('/login?error=invalid');
     }
-    await setSession(user.id);
+    await setUserSession(user.id, email);
   } catch (e: any) {
     if (e.digest?.includes('NEXT_REDIRECT')) throw e;
     console.error('Login error:', e);
@@ -47,7 +47,7 @@ export async function loginAction(formData: FormData) {
 }
 
 export async function logoutAction() {
-  await clearSession();
+  await clearUserSession();
   redirect('/');
 }
 

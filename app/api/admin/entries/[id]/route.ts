@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server';
 import { deleteWaitlistEntry } from '@/lib/db';
-import { getAuthUser } from '@/lib/auth';
+import { getAdminUser } from '@/lib/auth';
 
 export async function DELETE(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const user = await getAuthUser();
+    const user = await getAdminUser();
     if (!user) {
       return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
     }

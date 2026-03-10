@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import { Rocket, ArrowLeft, Sparkles, Layout, Palette, Type } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/Button';
+import { SubmitButton } from '@/components/SubmitButton';
 import styles from './create.module.css';
 
 export default async function CreateWaitlist() {
@@ -22,8 +23,8 @@ export default async function CreateWaitlist() {
       <div className={styles.card}>
         <div className={styles.header}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', justifyContent: 'center', marginBottom: '1rem' }}>
-            <div style={{ width: '3rem', height: '3rem', backgroundColor: 'var(--black)', borderRadius: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Sparkles className="w-6 h-6 text-white" />
+            <div style={{ width: '3rem', height: '3rem', backgroundColor: 'var(--black)', borderRadius: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
+              <Sparkles className="w-6 h-6" />
             </div>
             <div style={{ textAlign: 'left' }}>
               <h1 className={styles.title}>Create Waitlist</h1>
@@ -94,14 +95,13 @@ export default async function CreateWaitlist() {
                 <option value="bg-blue-50">Ocean Blue</option>
                 <option value="bg-purple-50">Royal Purple</option>
                 <option value="bg-emerald-50">Nature Green</option>
-                <option value="bg-zinc-900">Midnight Dark</option>
               </select>
             </div>
           </div>
 
-          <Button type="submit" className={styles.submitBtn} icon={<Rocket className="w-5 h-5" />}>
+          <SubmitButton className={styles.submitBtn} icon={<Rocket className="w-5 h-5" />}>
             Create Launch Page
-          </Button>
+          </SubmitButton>
         </form>
       </div>
     </div>

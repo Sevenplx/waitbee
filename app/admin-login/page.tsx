@@ -56,7 +56,7 @@ export default function AdminLoginPage() {
               <input
                 type="email"
                 className={styles.formInput}
-                style={{ paddingLeft: '2.5rem' }}
+                style={{ paddingLeft: '3rem' }}
                 placeholder="admin@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -72,7 +72,7 @@ export default function AdminLoginPage() {
               <input
                 type="password"
                 className={styles.formInput}
-                style={{ paddingLeft: '2.5rem' }}
+                style={{ paddingLeft: '3rem' }}
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}

@@ -78,7 +78,6 @@
 }
 
 .loader {
-  margin-right: 0.5rem;
   animation: spin 1s linear infinite;
 }
 

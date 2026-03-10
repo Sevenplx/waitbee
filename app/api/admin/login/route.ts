@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { verifyUser } from '@/lib/db';
-import { setSession } from '@/lib/auth';
+import { setAdminSession } from '@/lib/auth';
 
 export async function POST(req: Request) {
   try {
@@ -13,7 +13,7 @@ export async function POST(req: Request) {
     const user = await verifyUser(email, password);
 
     if (user) {
-      await setSession(user.id);
+      await setAdminSession(user.id, email);
       return NextResponse.json({ success: true });
     } else {
       return NextResponse.json({ error: 'invalid_credentials' }, { status: 401 });

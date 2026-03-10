@@ -29,7 +29,7 @@ export default function AdminLayout({
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const handleLogout = async () => {
-    await fetch('/api/logout', { method: 'POST' });
+    await fetch('/api/admin/logout', { method: 'POST' });
     router.push('/admin-login');
   };
 

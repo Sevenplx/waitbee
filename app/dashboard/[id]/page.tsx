@@ -5,6 +5,7 @@ import { Download, ExternalLink, ArrowLeft } from 'lucide-react';
 import { headers } from 'next/headers';
 import Link from 'next/link';
 import { DeleteSubscriberButton } from '@/components/DeleteSubscriberButton';
+import CopyButton from '@/components/CopyButton';
 import styles from './dashboard.module.css';
 
 export default async function DashboardPage({ params }: { params: Promise<{ id: string }> }) {
@@ -14,12 +15,10 @@ export default async function DashboardPage({ params }: { params: Promise<{ id: 
   const { id } = await params;
   const waitlist = await getWaitlistById(id);
 
-  if (!waitlist || waitlist.userId !== user.id) {
-    notFound();
-  }
+  if (!waitlist || waitlist.userId !== user.id) notFound();
 
   const subscribers = await getSubscribers(waitlist.id);
-  
+
   const headersList = await headers();
   const host = headersList.get('host') || '';
   const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
@@ -40,7 +39,6 @@ export default async function DashboardPage({ params }: { params: Promise<{ id: 
       </header>
 
       <main className={styles.main}>
-
         <div className={styles.topSection}>
           <div>
             <h1 className={styles.productName}>{waitlist.productName}</h1>
@@ -50,30 +48,28 @@ export default async function DashboardPage({ params }: { params: Promise<{ id: 
                 {publicUrl}
                 <ExternalLink className={styles.publicLinkIcon} />
               </a>
+              <CopyButton text={publicUrl} />
             </div>
           </div>
-          
+
           <div className={styles.statsCard}>
             <div>
               <div className={styles.statsLabel}>Total Subscribers</div>
               <div className={styles.statsValue}>{subscribers.length}</div>
             </div>
             <div className={styles.statsDivider}></div>
-            <a 
-              href={`/api/waitlists/${id}/export`}
-              className={styles.exportBtn}
-              title="Export CSV"
-            >
+            <a href={`/api/waitlists/${id}/export`} className={styles.exportBtn} title="Export CSV">
               <Download className={styles.exportIcon} />
             </a>
           </div>
         </div>
 
+        {/* Table of subscribers */}
         <div className={styles.tableCard}>
           <div className={styles.tableHeader}>
             <h2 className={styles.tableTitle}>Email List</h2>
           </div>
-          
+
           {subscribers.length === 0 ? (
             <div className={styles.emptyState}>
               <div className={styles.emptyIconWrapper}>

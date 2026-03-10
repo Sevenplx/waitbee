@@ -25,8 +25,8 @@ export default async function DashboardIndexPage() {
       <header className={styles.header}>
         <div className={styles.headerInner}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <div style={{ width: '2rem', height: '2rem', backgroundColor: 'var(--black)', borderRadius: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Rocket className="w-4 h-4 text-white" />
+            <div style={{ width: '2rem', height: '2rem', backgroundColor: 'var(--black)', borderRadius: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
+              <Rocket className="w-4 h-4" />
             </div>
             <span className={styles.logo}>WaitlistBuilder</span>
           </Link>

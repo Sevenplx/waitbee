@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 import { getWaitlistEntries } from '@/lib/db';
-import { getAuthUser } from '@/lib/auth';
+import { getAdminUser } from '@/lib/auth';
 
 export async function GET() {
   try {
-    const user = await getAuthUser();
+    const user = await getAdminUser();
     if (!user) {
       return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
     }

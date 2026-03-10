@@ -1,9 +1,11 @@
 import { getWaitlistBySlug } from '@/lib/db';
 import { notFound } from 'next/navigation';
 import { subscribeAction } from '@/app/actions';
-import { CheckCircle2, Rocket, AlertCircle, Mail, ShieldCheck } from 'lucide-react';
+import { Rocket, CheckCircle2, AlertCircle, Mail, ShieldCheck } from 'lucide-react';
+import { SubmitButton } from '@/components/SubmitButton';
 import Link from 'next/link';
 import styles from './public-waitlist.module.css';
+import { Metadata } from 'next';
 
 function getThemeFilter(bgColor: string) {
   switch (bgColor) {
@@ -12,9 +14,33 @@ function getThemeFilter(bgColor: string) {
     case 'bg-blue-50': return 'hue-rotate(20deg) saturate(150%)';
     case 'bg-purple-50': return 'hue-rotate(60deg) saturate(120%)';
     case 'bg-emerald-50': return 'hue-rotate(-60deg) saturate(120%)';
-    case 'bg-zinc-900': return 'grayscale(100%) brightness(20%)';
     default: return 'none';
   }
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const waitlist = await getWaitlistBySlug(slug);
+
+  if (!waitlist) {
+    return {
+      title: 'Waitlist Not Found',
+      description: 'This waitlist does not exist.',
+    };
+  }
+
+  return {
+    title: waitlist.productName,
+    description: waitlist.description,
+    openGraph: {
+      title: waitlist.productName,
+      description: waitlist.description,
+    },
+    twitter: {
+      title: waitlist.productName,
+      description: waitlist.description,
+    },
+  };
 }
 
 export default async function WaitlistPage({ params, searchParams }: { params: Promise<{ slug: string }>, searchParams: Promise<{ msg?: string }> }) {
@@ -26,7 +52,6 @@ export default async function WaitlistPage({ params, searchParams }: { params: P
     notFound();
   }
 
-  const isDark = waitlist.bgColor === 'bg-zinc-900';
   const bgClass = waitlist.bgColor || 'bg-white'; 
   const themeFilter = getThemeFilter(bgClass);
 
@@ -40,7 +65,7 @@ export default async function WaitlistPage({ params, searchParams }: { params: P
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundImage: `url('https://images.unsplash.com/photo-1707209857286-62b9be358128?q=80&w=1518&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,
+          backgroundImage: `url('/waitlist-bg.avif')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           filter: themeFilter,
@@ -53,10 +78,10 @@ export default async function WaitlistPage({ params, searchParams }: { params: P
           <Rocket className="w-8 h-8" />
         </div>
         
-        <h1 className={styles.title} style={{ color: isDark ? 'var(--white)' : 'var(--zinc-900)' }}>
+        <h1 className={styles.title}>
           {waitlist.productName}
         </h1>
-        <p className={styles.description} style={{ color: isDark ? 'var(--zinc-400)' : 'var(--zinc-500)' }}>
+        <p className={styles.description}>
           {waitlist.description}
         </p>
 
@@ -101,16 +126,9 @@ export default async function WaitlistPage({ params, searchParams }: { params: P
                   style={{ paddingLeft: '3rem' }}
                 />
               </div>
-              <button 
-                type="submit" 
-                className={styles.submitBtn}
-                style={{ 
-                  backgroundColor: isDark ? 'var(--white)' : 'var(--zinc-900)',
-                  color: isDark ? 'var(--black)' : 'var(--white)'
-                }}
-              >
+              <SubmitButton className={styles.submitBtn}>
                 {waitlist.buttonText}
-              </button>
+              </SubmitButton>
               
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', marginTop: '1rem', color: 'var(--zinc-400)', fontSize: '0.75rem' }}>
                 <ShieldCheck className="w-3 h-3" />
