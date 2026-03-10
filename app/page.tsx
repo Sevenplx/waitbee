@@ -49,12 +49,12 @@ export default function LandingPage() {
           </p>
 
           <div className={styles.ctaGroup}>
-            <Link href="/signup">
+            <Link href="/create">
               <Button size="lg" icon={<ArrowRight className="w-4 h-4" />}>
                 Start Building for Free
               </Button>
             </Link>
-            <Link href="/login">
+            <Link href="/dashboard">
               <Button size="lg" variant="outline">
                 View Dashboard
               </Button>

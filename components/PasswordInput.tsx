@@ -27,7 +27,7 @@ export default function PasswordInput({ id, name, placeholder, minLength, requir
         placeholder={placeholder}
         className={className || styles.input}
         minLength={minLength}
-        style={{ ...style, paddingRight: '2.5rem' }}
+        style={{ ...style, paddingRight: '3rem' }}
       />
       <button
         type="button"
