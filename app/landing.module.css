@@ -63,6 +63,20 @@
   color: #000;
 }
 
+.navLinksBtn {
+  all: unset;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #666;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.navLinksBtn:hover {
+  color: #000;
+}
+
 /* Right: Action Buttons */
 .navActions {
   display: flex;

@@ -1,0 +1,222 @@
+  body {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    background: #fff;
+    margin: 0;
+    padding: 24px;
+    color: #1a1a1a;
+  }
+
+  /* Donate button */
+  .donate-btn {
+    font-weight: 600;
+    font-size: 1.125rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #1a1a1a;
+    transition: color 0.3s ease;
+    padding: 0;
+  }
+  .donate-btn:hover {
+    color: #6366f1;
+  }
+
+  /* Modal overlay */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.15);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1500;
+    padding: 20px;
+    backdrop-filter: blur(5px);
+    overflow-y: auto;
+  }
+
+  /* Modal container */
+  .modal-content {
+    background: #fff;
+    max-width: 720px;
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
+    padding: 32px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    animation: slideFadeIn 0.3s ease forwards;
+    position: relative;
+  }
+  /* Open animation */
+  @keyframes slideFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  /* Close animation */
+  @keyframes slideFadeOut {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-12px);
+    }
+  }
+
+  /* Modal header */
+  .modal-header {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #111827;
+    text-align: center;
+    margin-bottom: 0;
+  }
+  
+  /* Thanks message */
+  .thanks-message {
+    font-size: 0.875rem;
+    color: #8c9096;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 4px auto;
+  }
+
+  /* Close button top-right */
+  .close-btn {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    color: #9ca3af;
+    transition: color 0.3s ease;
+  }
+  .close-btn:hover {
+    color: #6b7280;
+  }
+
+  /* Donation grid */
+  .donation-grid {
+    display: flex;
+    gap: 24px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  /* Each donation item */
+  .donation-item {
+    flex: 1 1 30%;
+    background: #f9fafb;
+    border-radius: 12px;
+    padding: 24px 20px;
+    box-shadow: 0 4px 8px rgb(0 0 0 / 0.04);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    transition: box-shadow 0.2s ease;
+  }
+  .donation-item:hover {
+    box-shadow: 0 6px 12px rgb(0 0 0 / 0.06);
+  }
+
+  /* QR image */
+  .donation-item img {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+  }
+
+  /* Address + copy button container */
+  .address-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    justify-content: center;
+    position: relative;
+  }
+
+  /* Address text */
+  .address-text {
+    font-family: "Roboto Mono", monospace;
+    font-size: 0.875rem;
+    color: #374151;
+    word-break: break-all;
+    user-select: text;
+    max-width: 180px;
+    text-align: center;
+  }
+
+  /* Copy button with icon only */
+  .copy-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    color: #6366f1;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  .copy-btn:hover {
+    background-color: #eef2ff;
+    color: #4338ca;
+  }
+  .copy-btn svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    display: block;
+  }
+
+  /* Tooltip style */
+  .tooltip {
+    position: absolute;
+    top: -32px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #111827;
+    color: #fff;
+    padding: 4px 12px;
+    font-size: 0.75rem;
+    border-radius: 8px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+  }
+  .tooltip.show {
+    opacity: 1;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .donation-grid {
+      flex-direction: column;
+      gap: 24px;
+      align-items: center;
+    }
+    .donation-item {
+      width: 100%;
+      max-width: 360px;
+    }
+    /* Make modal smaller on mobile and scrollable */
+    .modal-content {
+      max-height: 80vh;
+      padding: 24px 20px;
+      overflow-y: auto;
+    }
+  }
