@@ -181,6 +181,9 @@ export default function DonateButton({ className }: { className?: string }) {
   text-align: center;
   max-width: 600px;
   margin: 0 auto;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .donation-grid {
