@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     description: 'Join 1,000+ founders using the fastest way to build early access hype.',
     siteName: 'WaitlistBuilder',
     images: [{
-        url: '/og-image.png', // Add a 1200x630 image in your /public folder
+        url: '/og-image.svg', // Updated to use the new og-image.svg
         width: 1200,
         height: 630,
         alt: 'WaitlistBuilder Preview',
@@ -43,11 +43,16 @@ export const metadata: Metadata = {
     title: 'WaitlistBuilder',
     description: 'Build your viral waitlist in seconds.',
     creator: '@sevenplx', // Your twitter handle
-    images: ['/og-image.png'],
+    images: ['/og-image.svg'], // Updated to use the new og-image.svg
   },
   robots: {
     index: true,
     follow: true,
+  },
+  icons: {
+    icon: '/logo.svg', // Website favicon
+    shortcut: '/logo.svg',
+    apple: '/logo.svg',
   },
 };
 

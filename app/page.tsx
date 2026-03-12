@@ -135,7 +135,7 @@ export default function LandingPage() {
             <Link href="https://github.com/Sevenplx/waitlist-builder" className={styles.footerLink} target="_blank">
               GitHub
             </Link>
-            <Link href="https://github.com/Sevenplx/autonin/issues/new" className={styles.footerLink} target="_blank">
+            <Link href="https://github.com/Sevenplx/waitlist-builder/issues/new" className={styles.footerLink} target="_blank">
               Report Bug
             </Link>
             <Link href="/admin-login" className={styles.footerLink}>

@@ -9,7 +9,7 @@ export default function GithubStarPill() {
     async function fetchStars() {
       try {
         const res = await fetch(
-          'https://api.github.com/repos/Sevenplx/autonin'
+          'https://api.github.com/repos/Sevenplx/waitlist-builder'
         );
 
         const data = await res.json();
@@ -30,7 +30,7 @@ export default function GithubStarPill() {
 
   return (
     <a
-      href="https://github.com/Sevenplx/autonin"
+      href="https://github.com/Sevenplx/waitlist-builder"
       target="_blank"
       rel="noopener noreferrer"
       style={{
