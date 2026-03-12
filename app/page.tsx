@@ -3,6 +3,7 @@ import { ArrowRight, Zap, Shield, Rocket, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/Button';
 import styles from './landing.module.css';
 import GithubStar from '@/components/GithubStar';
+import DonateButton from '@/components/DonateButton';
 
 export default function LandingPage() {
   return (
@@ -19,6 +20,8 @@ export default function LandingPage() {
         <div className={styles.navLinks}>
           <Link href="#features">Features</Link>
           <Link href="https://github.com/sevenplx/waitlist-builder">GitHub</Link>
+          {/* Donate Button */}
+          <DonateButton className="navLinksLink" />
         </div>
 
         <div className={styles.navActions}>
@@ -71,7 +74,7 @@ export default function LandingPage() {
     {/* Your existing hero content: badge, title, description, buttons */}
   </div>
 
-  {/* <div className={styles.heroVideo}>
+  <div className={styles.heroVideo}>
     <iframe
       width="560"
       height="315"
@@ -80,7 +83,7 @@ export default function LandingPage() {
       frameBorder="0"
       allowFullScreen
     ></iframe>
-  </div> */}
+  </div>
 </div>
 
         {/* Features Grid */}
