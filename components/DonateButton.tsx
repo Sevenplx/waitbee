@@ -82,232 +82,248 @@ export default function DonateButton({ className }: { className?: string }) {
       )}
 
       <style jsx>{`
-.donate-btn {
-  text-decoration: none;
-  color: #666;
-  font-size: 0.95rem;
-  font-weight: 500;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  transition: color 0.2s ease;
-  padding: 0;
-}
-.donate-btn:hover {
-  color: #d45656ff;
-}
+      ::-webkit-scrollbar {
+        width: 5px; /* Width for vertical scrollbar */
+      }
 
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.15);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  padding: 20px;
-  backdrop-filter: blur(5px);
-  animation: fadeIn 0.25s ease forwards;
-}
+      ::-webkit-scrollbar-thumb:hover {
+        background-color: var(--zinc-400); /* Width for vertical scrollbar */
+      }
 
-.modal-content {
-  background: #ffffff;
-  max-width: 720px;
-  width: 720px;
-  border-radius: 16px;
-  padding: 36px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  position: relative;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
-  transform: scale(0.95);
-  opacity: 0;
-  animation: popIn 0.25s ease forwards;
-  overflow-x: hidden; /* prevent horizontal scroll */
-  overflow-y: auto;   /* vertical scroll if content is tall */
-  box-sizing: border-box;
-}
+      ::-webkit-scrollbar-thumb {
+        background-color: var(--zinc-300); /* Color of the thumb */
+      }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
+      ::-webkit-scrollbar-track {
+        background-color: var(--zinc-100); /* Color of the track */
+      }
 
-@keyframes popIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
+      .donate-btn {
+        text-decoration: none;
+        color: #666;
+        font-size: 0.95rem;
+        font-weight: 500;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        transition: color 0.2s ease;
+        padding: 0;
+      }
+      .donate-btn:hover {
+        color: #d45656ff;
+      }
 
-@keyframes popOut {
-  from { opacity: 1; transform: scale(1); }
-  to { opacity: 0; transform: scale(0.95); }
-}
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.15);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        padding: 20px;
+        backdrop-filter: blur(5px);
+        animation: fadeIn 0.25s ease forwards;
+      }
 
-.pop-out {
-  animation: popOut 0.25s forwards;
-}
+      .modal-content {
+        background: #ffffff;
+        max-width: 720px;
+        width: 720px;
+        border-radius: 16px;
+        padding: 36px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        position: relative;
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
+        transform: scale(0.95);
+        opacity: 0;
+        animation: popIn 0.25s ease forwards;
+        overflow-x: hidden; /* prevent horizontal scroll */
+        overflow-y: auto;   /* vertical scroll if content is tall */
+        box-sizing: border-box;
+      }
 
-.close-btn {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  background: transparent;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #9ca3af;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.2s ease;
-}
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
 
-.close-btn:hover { color: #6b7280; }
+      @keyframes popIn {
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
+      }
 
-.modal-header {
-  font-weight: 700;
-  font-size: 1.5rem;
-  color: #111827;
-  text-align: center;
-  margin: 0;
-}
+      @keyframes popOut {
+        from { opacity: 1; transform: scale(1); }
+        to { opacity: 0; transform: scale(0.95); }
+      }
 
-.thanks-message {
-  font-size: 0.875rem;
-  color: #8c9096;
-  text-align: center;
-  max-width: 600px;
-  margin: 0 auto;
-  white-space: normal;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-}
+      .pop-out {
+        animation: popOut 0.25s forwards;
+      }
 
-.donation-grid {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  overflow-x: hidden;
-  flex-wrap: nowrap;
-}
+      .close-btn {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        background: transparent;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: #9ca3af;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: color 0.2s ease;
+      }
 
-.donation-item {
-  flex: 0 0 200px;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 16px 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
-  box-sizing: border-box;
-  transition: all 0.2s ease;
-  min-height: auto;
-}
+      .close-btn:hover { color: #6b7280; }
 
-.donation-item:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  transform: translateY(-2px);
-}
+      .modal-header {
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: #111827;
+        text-align: center;
+        margin: 0;
+      }
 
-.image-container {
-  width: 140px;
-  height: 140px;
-  position: relative;
-}
+      .thanks-message {
+        font-size: 0.875rem;
+        color: #8c9096;
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
 
-.address-wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  position: relative;
-}
+      .donation-grid {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        overflow-x: hidden;
+        flex-wrap: nowrap;
+      }
 
-.address-text {
-  font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
-  font-size: 0.75rem;
-  color: #374151;
-  background: #f3f4f6;
-  padding: 6px 8px;
-  border-radius: 6px;
-  text-align: center;
-  user-select: all;
-  cursor: pointer;
-  line-height: 1.3;
-  max-width: 180px;
-  transition: background 0.2s ease;
-  white-space: normal;       /* allow wrapping */
-  overflow-wrap: anywhere;   /* break long words if needed */
-  word-break: break-word;
-}
+      .donation-item {
+        flex: 0 0 200px;
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 16px 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+        box-sizing: border-box;
+        transition: all 0.2s ease;
+        min-height: auto;
+      }
 
-.address-text:hover {
-  background: #e5e7eb;
-}
+      .donation-item:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+      }
 
-/* Tooltip for copy feedback */
-.tooltip {
-  position: absolute;
-  bottom: 130%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #1f2937;
-  color: #fff;
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-  z-index: 10;
-}
+      .image-container {
+        width: 140px;
+        height: 140px;
+        position: relative;
+      }
 
-.address-wrapper:hover .tooltip {
-  opacity: 1;
-}
+      .address-wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        position: relative;
+      }
 
-/* Responsive - vertical stacking on mobile */
-@media (max-width: 768px) {
-  .modal-overlay {
-    align-items: flex-start; /* allow scrolling instead of center overlay */
-    padding-top: 40px;
-    padding-bottom: 40px;
-  }
+      .address-text {
+        font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+        font-size: 0.75rem;
+        color: #374151;
+        background: #f3f4f6;
+        padding: 6px 8px;
+        border-radius: 6px;
+        text-align: center;
+        user-select: all;
+        cursor: pointer;
+        line-height: 1.3;
+        max-width: 180px;
+        transition: background 0.2s ease;
+        white-space: normal;       /* allow wrapping */
+        overflow-wrap: anywhere;   /* break long words if needed */
+        word-break: break-word;
+      }
 
-  .modal-content {
-    width: 90vw;
-    max-width: 360px; /* smaller max-width for vertical scroll */
-    max-height: 90vh; /* prevent overlay overflow */
-    padding: 24px 20px;
-    overflow-y: auto;
-    margin: 0 auto; /* center horizontally */
-  }
+      .address-text:hover {
+        background: #e5e7eb;
+      }
 
-  .donation-grid {
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-  }
+      /* Tooltip for copy feedback */
+      .tooltip {
+        position: absolute;
+        bottom: 130%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #1f2937;
+        color: #fff;
+        padding: 6px 10px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+        z-index: 10;
+      }
 
-  .donation-item {
-    flex: none;
-    width: 100%;
-    max-width: 340px;
-    padding: 20px 18px;
-  }
+      .address-wrapper:hover .tooltip {
+        opacity: 1;
+      }
 
-  .address-text {
-    max-width: 100%;
-  }
-}
+      /* Responsive - vertical stacking on mobile */
+      @media (max-width: 768px) {
+        .modal-overlay {
+          align-items: flex-start; /* allow scrolling instead of center overlay */
+          padding-top: 40px;
+          padding-bottom: 40px;
+        }
+
+        .modal-content {
+          width: 90vw;
+          max-width: 360px; /* smaller max-width for vertical scroll */
+          max-height: 90vh; /* prevent overlay overflow */
+          padding: 24px 20px;
+          overflow-y: auto;
+          margin: 0 auto; /* center horizontally */
+        }
+
+        .donation-grid {
+          flex-direction: column;
+          gap: 20px;
+          align-items: center;
+        }
+
+        .donation-item {
+          flex: none;
+          width: 100%;
+          max-width: 340px;
+          padding: 20px 18px;
+        }
+
+        .address-text {
+          max-width: 100%;
+        }
+      }
       `}</style>
     </>
   );
