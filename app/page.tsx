@@ -18,7 +18,7 @@ export default function LandingPage() {
         </div>
 
         <div className={styles.navLinks}>
-          <Link href="#features">Features</Link>
+          <Link className={styles.featureLink} href="#features">Features</Link>
           <Link href="https://github.com/sevenplx/waitlist-builder">GitHub</Link>
           {/* Donate Button */}
           <DonateButton className="navLinksLink" />
