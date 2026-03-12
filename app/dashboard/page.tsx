@@ -48,11 +48,13 @@ export default async function DashboardIndexPage() {
             <h1 className={styles.title}>Your Waitlists</h1>
             <p style={{ color: 'var(--zinc-500)', fontSize: '0.875rem' }}>Manage and track your product launches.</p>
           </div>
-          <Link href="/create">
-            <Button icon={<Plus className="w-4 h-4" />}>
-              Create New
-            </Button>
-          </Link>
+          <div className={styles.createBtnContainer}>
+            <Link href="/create">
+              <Button icon={<Plus className="w-4 h-4" />}>
+                Create New
+              </Button>
+            </Link>
+          </div>
         </div>
 
         {waitlists.length === 0 ? (

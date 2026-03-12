@@ -23,6 +23,11 @@
   font-size: 1.125rem;
   letter-spacing: -0.025em;
 }
+@media (max-width: 460px) {
+  .logo {
+    display: none;
+  }
+}
 
 .userNav {
   display: flex;
@@ -78,6 +83,10 @@
 
 .createBtn:hover {
   background-color: var(--zinc-800);
+}
+
+.createBtnContainer {
+  white-space: nowrap;
 }
 
 .grid {
