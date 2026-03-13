@@ -39,7 +39,7 @@ cp .env.example .env.local
 
 # Start the development server
 npm run dev
-````
+```
 
 Open the app in your browser at: `http://localhost:3000`
 
@@ -54,10 +54,10 @@ npm start
 
 ## Usage
 
-* **Admin:** Log in to the dashboard to view and manage waitlist entries, users, and settings
-* **Public Waitlist:** Share the public join page for users to add themselves
-* **Export:** Download waitlist data as CSV for analysis or import into other tools
-* **Authentication:** Use built-in login and password reset flows to manage access
+- **Admin:** Log in to the dashboard to view and manage waitlist entries, users, and settings
+- **Public Waitlist:** Share the public join page for users to add themselves
+- **Export:** Download waitlist data as CSV for analysis or import into other tools
+- **Authentication:** Use built-in login and password reset flows to manage access
 
 ---
 
