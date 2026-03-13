@@ -9,7 +9,7 @@ export default function GithubStarPill() {
     async function fetchStars() {
       try {
         const res = await fetch(
-          'https://api.github.com/repos/Sevenplx/waitlist-builder'
+          'https://api.github.com/repos/Sevenplx/waitbee'
         );
 
         const data = await res.json();
