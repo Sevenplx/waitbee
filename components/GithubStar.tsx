@@ -30,7 +30,7 @@ export default function GithubStarPill() {
 
   return (
     <a
-      href="https://https://github.com/Sevenplx/waitbee"
+      href="https://www.github.com/Sevenplx/waitbee"
       target="_blank"
       rel="noopener noreferrer"
       style={{

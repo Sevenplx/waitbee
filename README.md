@@ -25,7 +25,7 @@ It provides an **admin dashboard**, a **public join flow**, and **exportable dat
 ### Quick Start
 ```bash
 # Clone the repository
-git clone https://github.com/Sevenplx/waitbee.git
+git clone www.github.com/Sevenplx/waitbee.git
 
 # Navigate to the project directory
 cd waitbee
