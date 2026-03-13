@@ -19,7 +19,7 @@ export default function LandingPage() {
 
         <div className={styles.navLinks}>
           <Link className={styles.featureLink} href="#features">Features</Link>
-          <Link href="https://github.com/sevenplx/waitlist-builder">GitHub</Link>
+          <Link href="https://https://github.com/Sevenplx/waitbee">GitHub</Link>
           {/* Donate Button */}
           <DonateButton className="navLinksLink" />
         </div>
@@ -132,10 +132,10 @@ export default function LandingPage() {
             Built by <a href="https://github.com/sevenplx">Chemitha Sathsilu</a> ♥ Open Source
           </p>
           <div className={styles.footerLinks}>
-            <Link href="https://github.com/Sevenplx/waitlist-builder" className={styles.footerLink} target="_blank">
+            <Link href="https://https://github.com/Sevenplx/waitbee" className={styles.footerLink} target="_blank">
               GitHub
             </Link>
-            <Link href="https://github.com/Sevenplx/waitlist-builder/issues/new" className={styles.footerLink} target="_blank">
+            <Link href="https://https://github.com/Sevenplx/waitbee/issues/new" className={styles.footerLink} target="_blank">
               Report Bug
             </Link>
             <Link href="/admin-login" className={styles.footerLink}>

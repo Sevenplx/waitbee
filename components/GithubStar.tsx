@@ -30,7 +30,7 @@ export default function GithubStarPill() {
 
   return (
     <a
-      href="https://github.com/Sevenplx/waitlist-builder"
+      href="https://https://github.com/Sevenplx/waitbee"
       target="_blank"
       rel="noopener noreferrer"
       style={{
