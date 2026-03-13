@@ -1,70 +1,96 @@
-# Waitlist Builder
+# Waitbee: Waitlist Builder
 
 ## Project Overview
-Waitlist Builder is a modern web application designed to help businesses and organizations manage their waitlists efficiently. With a user-friendly interface and robust backend, this app simplifies the process of adding, managing, and exporting waitlist entries.
+**Waitbee** is a modern, developer-friendly web application for managing waitlists.  
+It provides an **admin dashboard**, a **public join flow**, and **exportable data** so teams can efficiently collect, manage, and analyze waitlist entries.
+
+---
 
 ## Features
-- **Admin Dashboard**: Manage users, settings, and analytics.
-- **Waitlist Management**: Add, check, and export waitlist entries.
-- **Authentication**: Secure login and password reset functionality.
-- **Responsive Design**: Optimized for both desktop and mobile devices.
-- **Integration Support**: Easily connect with third-party tools.
+- **Admin dashboard** for managing entries, users, and settings  
+- **Public waitlist interface** for users to join  
+- **CRUD operations**: add, search, update, and export entries (CSV)  
+- **Authentication**: secure login and password reset flows  
+- **Responsive UI** for desktop and mobile  
+- **Integration-ready**: API, webhooks, and third-party tool support  
+
+---
 
 ## Installation
 
 ### Prerequisites
-- Node.js (latest LTS version recommended)
+- Node.js (latest LTS recommended)  
+- npm (bundled with Node.js) or yarn  
 
-### Steps
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-repo/waitlist-builder.git
-   ```
-2. Navigate to the project directory:
-   ```bash
-   cd waitlist-builder
-   ```
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
-4. Set up environment variables:
-   - Create a `.env.local` file in the root directory.
-   - Add your `GEMINI_API_KEY`:
-     ```env
-     GEMINI_API_KEY=your_api_key_here
-     ```
-5. Start the development server:
-   ```bash
-   npm run dev
-   ```
-6. Open your browser and visit `http://localhost:3000`.
+### Quick Start
+```bash
+# Clone the repository
+git clone https://github.com/Sevenplx/waitbee.git
 
-## Usage
-- **Admin Login**: Access the admin dashboard to manage waitlists and settings.
-- **Public Waitlist**: Allow users to join waitlists via a public interface.
-- **Export Data**: Export waitlist entries for further analysis.
+# Navigate to the project directory
+cd waitbee
 
-## Contribution Guidelines
-We welcome contributions to improve Waitlist Builder! To contribute:
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix:
-   ```bash
-   git checkout -b feature-name
-   ```
-3. Commit your changes:
-   ```bash
-   git commit -m "Add new feature"
-   ```
-4. Push to your branch:
-   ```bash
-   git push origin feature-name
-   ```
-5. Open a pull request.
+# Install dependencies
+npm install
 
-## License
-This project is licensed under the [MIT License](LICENSE).
+# Copy and configure environment variables
+cp .env.example .env.local
+# Edit .env.local and set required keys (e.g., GEMINI_API_KEY, database, auth settings)
+
+# Start the development server
+npm run dev
+````
+
+Open the app in your browser at: `http://localhost:3000`
+
+### Building for Production
+
+```bash
+npm run build
+npm start
+```
 
 ---
 
-For any questions or support, feel free to open an issue or contact the maintainers.
+## Usage
+
+* **Admin:** Log in to the dashboard to view and manage waitlist entries, users, and settings
+* **Public Waitlist:** Share the public join page for users to add themselves
+* **Export:** Download waitlist data as CSV for analysis or import into other tools
+* **Authentication:** Use built-in login and password reset flows to manage access
+
+---
+
+## Contribution Guidelines
+
+We welcome contributions of all sizes.
+
+1. Fork the repository
+2. Create a feature branch:
+
+```bash
+git checkout -b feature/your-feature
+```
+
+3. Commit your changes with clear messages:
+
+```bash
+git commit -m "Describe your change"
+```
+
+4. Push your branch and open a pull request
+5. Ensure your code follows the existing style, includes tests where appropriate, and that the app builds and runs locally
+
+If you find a bug or want to propose a feature, open an issue with steps to reproduce and the expected behavior.
+
+---
+
+## License
+
+This project is licensed under the **MIT License**. See `LICENSE` for details.
+
+---
+
+## Support
+
+For questions or issues, please open an issue in the repository.
