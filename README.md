@@ -1,20 +1,70 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Waitlist Builder
 
-# Run and deploy your AI Studio app
+## Project Overview
+Waitlist Builder is a modern web application designed to help businesses and organizations manage their waitlists efficiently. With a user-friendly interface and robust backend, this app simplifies the process of adding, managing, and exporting waitlist entries.
 
-This contains everything you need to run your app locally.
+## Features
+- **Admin Dashboard**: Manage users, settings, and analytics.
+- **Waitlist Management**: Add, check, and export waitlist entries.
+- **Authentication**: Secure login and password reset functionality.
+- **Responsive Design**: Optimized for both desktop and mobile devices.
+- **Integration Support**: Easily connect with third-party tools.
 
-View your app in AI Studio: https://ai.studio/apps/8d0400eb-fe58-40ea-936e-9a5effd2cb0e
+## Installation
 
-## Run Locally
+### Prerequisites
+- Node.js (latest LTS version recommended)
 
-**Prerequisites:**  Node.js
+### Steps
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repo/waitlist-builder.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd waitlist-builder
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Set up environment variables:
+   - Create a `.env.local` file in the root directory.
+   - Add your `GEMINI_API_KEY`:
+     ```env
+     GEMINI_API_KEY=your_api_key_here
+     ```
+5. Start the development server:
+   ```bash
+   npm run dev
+   ```
+6. Open your browser and visit `http://localhost:3000`.
 
+## Usage
+- **Admin Login**: Access the admin dashboard to manage waitlists and settings.
+- **Public Waitlist**: Allow users to join waitlists via a public interface.
+- **Export Data**: Export waitlist entries for further analysis.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## Contribution Guidelines
+We welcome contributions to improve Waitlist Builder! To contribute:
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix:
+   ```bash
+   git checkout -b feature-name
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m "Add new feature"
+   ```
+4. Push to your branch:
+   ```bash
+   git push origin feature-name
+   ```
+5. Open a pull request.
+
+## License
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+For any questions or support, feel free to open an issue or contact the maintainers.
