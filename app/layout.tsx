@@ -29,10 +29,10 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://waitlistbuilder.com',
     title: 'WaitlistBuilder - Launch Your Product with a Viral Waitlist',
-    description: 'Join 1,000+ founders using the fastest way to build early access hype.',
+    description: 'Used by early-stage founders to quickly build hype, collect emails, and launch their products.',
     siteName: 'WaitlistBuilder',
     images: [{
-        url: '/og-image.svg', // Updated to use the new og-image.svg
+        url: '/yt-thumbnail.png',
         width: 1200,
         height: 630,
         alt: 'WaitlistBuilder Preview',
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     title: 'WaitlistBuilder',
     description: 'Build your viral waitlist in seconds.',
     creator: '@sevenplx', // Your twitter handle
-    images: ['/og-image.svg'], // Updated to use the new og-image.svg
+    images: ['/yt-thumbnail.png'],
   },
   robots: {
     index: true,

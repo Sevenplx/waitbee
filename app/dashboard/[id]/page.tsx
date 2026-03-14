@@ -1,3 +1,4 @@
+// app/dashboard/[id]/page.tsx
 import { getWaitlistById, getSubscribers } from '@/lib/db';
 import { getAuthUser } from '@/lib/auth';
 import { notFound, redirect } from 'next/navigation';
@@ -7,14 +8,15 @@ import Link from 'next/link';
 import { DeleteSubscriberButton } from '@/components/DeleteSubscriberButton';
 import CopyButton from '@/components/CopyButton';
 import styles from './dashboard.module.css';
+import Share from '@/components/Share';
 
-export default async function DashboardPage({ params }: { params: Promise<{ id: string }> }) {
+// This is a SERVER component
+export default async function DashboardPage({ params }: { params: { id: string } }) {
   const user = await getAuthUser();
   if (!user) redirect('/login');
 
-  const { id } = await params;
+  const { id } = params;
   const waitlist = await getWaitlistById(id);
-
   if (!waitlist || waitlist.userId !== user.id) notFound();
 
   const subscribers = await getSubscribers(waitlist.id);
@@ -48,7 +50,7 @@ export default async function DashboardPage({ params }: { params: Promise<{ id: 
                 {publicUrl}
                 <ExternalLink className={styles.publicLinkIcon} />
               </a>
-              <CopyButton text={publicUrl} />
+              <Share waitlistSlug={waitlist.slug} /> {/* Share button + popup */}
             </div>
           </div>
 

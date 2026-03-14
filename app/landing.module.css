@@ -221,7 +221,7 @@
   max-width: 42rem;
   margin: 0 auto 3rem;
   color: var(--zinc-500);
-  font-size: 1.125rem;
+  font-size: 5rem;
   line-height: 1.625;
 }
 
@@ -229,6 +229,22 @@
   .description {
     font-size: 1.25rem;
   }
+  .trustText{
+    font-size: 0.5rem;
+  }
+}
+
+.trustText {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  padding: 0 1rem;
+  font-size: 0.875rem;
+  color: var(--zinc-400);
+  line-height: 1.5;
+  font-weight: 400;
 }
 
 .ctaGroup {
