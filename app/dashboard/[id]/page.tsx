@@ -6,16 +6,20 @@ import { Download, ExternalLink, ArrowLeft } from 'lucide-react';
 import { headers } from 'next/headers';
 import Link from 'next/link';
 import { DeleteSubscriberButton } from '@/components/DeleteSubscriberButton';
-import CopyButton from '@/components/CopyButton';
 import styles from './dashboard.module.css';
 import Share from '@/components/Share';
 
 // This is a SERVER component
-export default async function DashboardPage({ params }: { params: { id: string } }) {
+export default async function DashboardPage({
+  params,
+}: {
+  params: Promise<{ id: string }>; // <- note the Promise type
+}) {
+  const { id } = await params; // <- must await it now
+
   const user = await getAuthUser();
   if (!user) redirect('/login');
 
-  const { id } = params;
   const waitlist = await getWaitlistById(id);
   if (!waitlist || waitlist.userId !== user.id) notFound();
 
@@ -50,7 +54,7 @@ export default async function DashboardPage({ params }: { params: { id: string }
                 {publicUrl}
                 <ExternalLink className={styles.publicLinkIcon} />
               </a>
-              <Share waitlistSlug={waitlist.slug} /> {/* Share button + popup */}
+              <Share waitlistSlug={waitlist.slug} />
             </div>
           </div>
 
@@ -75,7 +79,10 @@ export default async function DashboardPage({ params }: { params: { id: string }
           {subscribers.length === 0 ? (
             <div className={styles.emptyState}>
               <div className={styles.emptyIconWrapper}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.emptyIcon}><path d="M21.2 8.4c.5.3.8.8.8 1.4v10.2a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9.8c0-.6.3-1.1.8-1.4l8-4.8c.7-.4 1.7-.4 2.4 0l8 4.8Z"/><path d="m22 10-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 10"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.emptyIcon}>
+                  <path d="M21.2 8.4c.5.3.8.8.8 1.4v10.2a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9.8c0-.6.3-1.1.8-1.4l8-4.8c.7-.4 1.7-.4 2.4 0l8 4.8Z" />
+                  <path d="m22 10-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 10" />
+                </svg>
               </div>
               <p>No subscribers yet. Share your link to get started!</p>
             </div>
@@ -94,12 +101,12 @@ export default async function DashboardPage({ params }: { params: { id: string }
                     <tr key={sub.id} className={styles.tr}>
                       <td className={styles.td}>{sub.email}</td>
                       <td className={`${styles.td} ${styles.tdRight}`}>
-                        {new Date(sub.createdAt).toLocaleDateString(undefined, { 
-                          year: 'numeric', 
-                          month: 'short', 
+                        {new Date(sub.createdAt).toLocaleDateString(undefined, {
+                          year: 'numeric',
+                          month: 'short',
                           day: 'numeric',
                           hour: '2-digit',
-                          minute: '2-digit'
+                          minute: '2-digit',
                         })}
                       </td>
                       <td className={styles.td}>
